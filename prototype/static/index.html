@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>职为你而来 · CareerSafari</title>
+  <style>
+    :root {
+      --bg: #0f1115;
+      --panel: #1a1d23;
+      --panel-2: #23262d;
+      --border: #2e323a;
+      --text: #e6e8eb;
+      --text-dim: #9ba1ab;
+      --accent: #3a86ff;
+      --accent-soft: #1e3a66;
+      --success: #2dd4bf;
+      --warn: #f59e0b;
+      --danger: #ef4444;
+      --pending: #f59e0b;
+      --calibrated: #2dd4bf;
+      --archived: #6b7280;
+      --radius: 10px;
+      --gap: 16px;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: var(--font); font-size: 14px; line-height: 1.55; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    header.top {
+      padding: 20px 28px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--gap);
+    }
+    .brand { display: flex; align-items: baseline; gap: 12px; }
+    .brand h1 { margin: 0; font-size: 20px; letter-spacing: 0.5px; }
+    .brand small { color: var(--text-dim); font-size: 12px; }
+    .actions { display: flex; gap: 8px; align-items: center; }
+    .actions button.primary { background: var(--accent); color: white; border: none; }
+    .actions button.primary:hover { background: #2d6fd6; }
+
+    .stats {
+      display: flex; gap: var(--gap);
+      padding: 16px 28px;
+      background: var(--panel);
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .stat-card {
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      padding: 10px 16px;
+      border-radius: var(--radius);
+      min-width: 100px;
+    }
+    .stat-card .label { color: var(--text-dim); font-size: 12px; }
+    .stat-card .value { font-size: 22px; font-weight: 600; margin-top: 4px; }
+    .stat-card.pending .value { color: var(--pending); }
+    .stat-card.calibrated .value { color: var(--calibrated); }
+    .stat-card.archived .value { color: var(--archived); }
+
+    .filter-bar {
+      display: flex; gap: 12px;
+      padding: 14px 28px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .filter-bar input, .filter-bar select {
+      background: var(--panel-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-family: var(--font);
+      font-size: 13px;
+      min-width: 140px;
+    }
+    .filter-bar input:focus, .filter-bar select:focus { outline: none; border-color: var(--accent); }
+    .filter-bar label { color: var(--text-dim); font-size: 12px; display: flex; flex-direction: column; gap: 4px; }
+
+    /* 可点击筛选 chip */
+    .chip-row { display: flex; flex-wrap: wrap; gap: 6px; padding-top: 4px; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 4px 10px; border-radius: 12px;
+      font-size: 12px; cursor: pointer; user-select: none;
+      background: var(--panel-2); color: var(--text-dim);
+      border: 1px solid var(--border);
+      transition: all 0.15s;
+    }
+    .chip:hover { border-color: var(--accent); color: var(--text); }
+    .chip.active {
+      background: var(--accent-soft); color: var(--accent);
+      border-color: var(--accent);
+    }
+    .chip .count { color: var(--text-dim); font-size: 11px; }
+    .chip.active .count { color: var(--accent); }
+    .chip-clear {
+      background: transparent; border: 1px dashed var(--border);
+      color: var(--text-dim); font-size: 11px;
+      padding: 4px 10px; border-radius: 12px;
+      cursor: pointer;
+    }
+    .chip-clear:hover { color: var(--danger); border-color: var(--danger); }
+
+    main { padding: 24px 28px; display: grid; grid-template-columns: 1fr 1.4fr; gap: 24px; }
+    @media (max-width: 1100px) { main { grid-template-columns: 1fr; } }
+
+    .list { display: flex; flex-direction: column; gap: 12px; max-height: calc(100vh - 240px); overflow-y: auto; padding-right: 4px; }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .card:hover { border-color: var(--accent); background: var(--panel-2); }
+    .card.active { border-color: var(--accent); background: var(--accent-soft); }
+    .card .title { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+    .card .meta { color: var(--text-dim); font-size: 12px; display: flex; gap: 12px; flex-wrap: wrap; }
+    .card .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 500; }
+    .badge.pending { background: rgba(245, 158, 11, 0.18); color: var(--pending); }
+    .badge.calibrated { background: rgba(45, 212, 191, 0.18); color: var(--calibrated); }
+    .badge.archived { background: rgba(107, 114, 128, 0.2); color: var(--archived); }
+    .badge.category-AI { background: rgba(58, 134, 255, 0.18); color: var(--accent); }
+    .badge.category-供应链 { background: rgba(168, 85, 247, 0.18); color: #c084fc; }
+    .badge.category-运筹优化 { background: rgba(34, 211, 238, 0.18); color: #22d3ee; }
+    .badge.category-其他 { background: rgba(155, 161, 171, 0.18); color: var(--text-dim); }
+
+    /* 在招状态徽章 */
+    .recruit-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 2px 8px; border-radius: 4px;
+      font-size: 11px; font-weight: 600;
+      border: 1px solid currentColor;
+    }
+    .recruit-badge.open { color: #22c55e; background: rgba(34, 197, 94, 0.12); }
+    .recruit-badge.closing_soon { color: #f59e0b; background: rgba(245, 158, 11, 0.15); }
+    .recruit-badge.expired { color: #ef4444; background: rgba(239, 68, 68, 0.12); }
+    .recruit-badge.unknown { color: var(--text-dim); background: var(--panel-2); }
+    .recruit-badge.open::before { content: "●"; }
+    .recruit-badge.closing_soon::before { content: "⏰"; }
+    .recruit-badge.expired::before { content: "✕"; }
+    .recruit-badge.unknown::before { content: "?"; }
+
+    /* 截止日期显眼框 */
+    .deadline-box {
+      background: rgba(239, 68, 68, 0.08);
+      border-left: 3px solid var(--danger);
+      border-radius: 4px;
+      padding: 10px 12px;
+      margin-top: 8px;
+    }
+    .deadline-box.closing_soon {
+      background: rgba(245, 158, 11, 0.08);
+      border-left-color: var(--warn);
+    }
+    .deadline-box.open {
+      background: rgba(34, 197, 94, 0.08);
+      border-left-color: #22c55e;
+    }
+    .deadline-box.unknown {
+      background: var(--panel-2);
+      border-left-color: var(--border);
+    }
+    .deadline-box .label { font-size: 11px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; }
+    .deadline-box .date { font-size: 16px; font-weight: 600; margin-top: 2px; font-family: var(--mono); }
+    .deadline-box .meta { font-size: 11px; color: var(--text-dim); margin-top: 2px; }
+
+    /* 卡片过期态 */
+    .card.expired-card { opacity: 0.55; }
+    .card.expired-card:hover { opacity: 1; }
+
+    /* 来源等级徽章 —— 更醒目，P1 绿/P2 蓝/P3 黄/P4 橙 */
+    .tier-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 2px 8px; border-radius: 4px;
+      font-size: 11px; font-weight: 600;
+      border: 1px solid currentColor;
+    }
+    .tier-badge.P1 { color: #22c55e; background: rgba(34, 197, 94, 0.12); }
+    .tier-badge.P2 { color: var(--accent); background: rgba(58, 134, 255, 0.12); }
+    .tier-badge.P3 { color: var(--warn); background: rgba(245, 158, 11, 0.12); }
+    .tier-badge.P4 { color: #fb923c; background: rgba(251, 146, 60, 0.12); }
+    .tier-badge::before { content: "●"; font-size: 10px; }
+
+    /* 卡片列表：来源行 */
+    .card .source-row {
+      color: var(--text-dim); font-size: 11px;
+      display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+      margin-top: 6px;
+    }
+    .card .source-row .host { font-family: var(--mono); }
+
+    /* 详情里的"信息来源"区块 */
+    .source-box {
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+    }
+    .source-box .row { display: flex; gap: 8px; align-items: baseline; margin-bottom: 6px; flex-wrap: wrap; }
+    .source-box .row:last-child { margin-bottom: 0; }
+    .source-box .key { color: var(--text-dim); font-size: 12px; min-width: 80px; }
+    .source-box .val { font-size: 13px; }
+    .source-box .url { font-family: var(--mono); font-size: 12px; color: var(--accent); word-break: break-all; }
+    .source-box .extras { font-size: 11px; color: var(--text-dim); margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border); }
+    .source-box .extras span { margin-right: 12px; }
+    .source-box .note {
+      margin-top: 10px; padding: 10px 12px;
+      background: rgba(245, 158, 11, 0.08);
+      border-left: 3px solid var(--warn);
+      border-radius: 4px;
+      font-size: 12px; color: #d6c9a8; line-height: 1.6;
+    }
+    .source-box .note::before { content: "⚠ 可信度说明："; color: var(--warn); font-weight: 600; }
+
+    /* 页面类型标签 */
+    .kind-badge {
+      display: inline-block; padding: 2px 8px; border-radius: 4px;
+      font-size: 11px; font-weight: 500;
+      background: rgba(155, 161, 171, 0.15); color: var(--text-dim);
+      border: 1px solid var(--border);
+    }
+    .kind-badge.岗位详情页 { background: rgba(45, 212, 191, 0.14); color: var(--calibrated); border-color: rgba(45, 212, 191, 0.3); }
+    .kind-badge.岗位列表页 { background: rgba(58, 134, 255, 0.14); color: var(--accent); border-color: rgba(58, 134, 255, 0.3); }
+    .kind-badge.招聘公告页 { background: rgba(168, 85, 247, 0.14); color: #c084fc; border-color: rgba(168, 85, 247, 0.3); }
+    .kind-badge.门户首页 { background: rgba(239, 68, 68, 0.12); color: var(--danger); border-color: rgba(239, 68, 68, 0.3); }
+
+    /* 字段完整度 */
+    .completeness {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px; color: var(--text-dim);
+    }
+    .completeness .bar {
+      width: 60px; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden;
+    }
+    .completeness .bar > i { display: block; height: 100%; background: var(--calibrated); }
+    .completeness.low .bar > i { background: var(--danger); }
+    .completeness.mid .bar > i { background: var(--warn); }
+
+    /* 附加字段表 */
+    .extra-table { width: 100%; font-size: 12px; border-collapse: collapse; }
+    .extra-table td { padding: 4px 0; }
+    .extra-table td:first-child { color: var(--text-dim); width: 100px; }
+    .empty { color: var(--text-dim); padding: 40px 0; text-align: center; font-size: 13px; }
+
+    .detail {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      max-height: calc(100vh - 240px);
+      overflow-y: auto;
+    }
+    .detail h2 { margin: 0 0 6px; font-size: 18px; }
+    .detail .sub { color: var(--text-dim); margin-bottom: 18px; }
+    .detail .field { margin-bottom: 16px; }
+    .detail .field-label { color: var(--text-dim); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+    .detail ul { margin: 0; padding-left: 18px; }
+    .detail ul li { margin-bottom: 4px; }
+    .detail .skill-list { display: flex; flex-wrap: wrap; gap: 6px; }
+    .detail .skill { background: var(--panel-2); border: 1px solid var(--border); padding: 3px 10px; border-radius: 4px; font-size: 12px; }
+    .detail pre { background: var(--panel-2); padding: 12px; border-radius: 6px; overflow-x: auto; font-size: 12px; max-height: 200px; }
+    .detail .source { font-family: var(--mono); font-size: 12px; color: var(--text-dim); word-break: break-all; }
+    .calibrate-bar { display: flex; gap: 8px; margin-top: 24px; padding-top: 18px; border-top: 1px solid var(--border); flex-wrap: wrap; }
+    .calibrate-bar textarea { flex: 1; min-width: 200px; min-height: 38px; background: var(--panel-2); color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 8px; font-family: var(--font); }
+    button {
+      background: var(--panel-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--font);
+      font-size: 13px;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    button:hover { border-color: var(--accent); }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .calibrate-bar button.cal { background: var(--calibrated); color: #0f1115; border-color: var(--calibrated); font-weight: 600; }
+    .calibrate-bar button.cal:hover { background: #26b8a5; }
+    .calibrate-bar button.archive { background: var(--archived); color: #0f1115; border-color: var(--archived); font-weight: 600; }
+    .calibrate-bar button.back { background: var(--warn); color: #0f1115; border-color: var(--warn); }
+
+    /* 模态：parse 表单 */
+    .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 100; }
+    .modal-bg.show { display: flex; }
+    .modal { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; max-width: 720px; width: calc(100% - 32px); max-height: 80vh; overflow-y: auto; }
+    .modal h3 { margin-top: 0; }
+    .modal label { display: block; margin: 14px 0 4px; color: var(--text-dim); font-size: 12px; }
+    .modal input, .modal select, .modal textarea { width: 100%; background: var(--panel-2); color: var(--text); border: 1px solid var(--border); padding: 8px 10px; border-radius: 6px; font-family: var(--font); }
+    .modal textarea { min-height: 180px; font-family: var(--mono); font-size: 12px; }
+    .modal .actions { margin-top: 18px; display: flex; gap: 8px; justify-content: flex-end; }
+    .toast { position: fixed; bottom: 24px; right: 24px; background: var(--panel-2); border: 1px solid var(--accent); padding: 12px 18px; border-radius: 6px; z-index: 200; display: none; }
+    .toast.show { display: block; }
+    .toast.error { border-color: var(--danger); }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <h1>职为你而来</h1>
+      <small>CareerSafari · W1 prototype</small>
+    </div>
+    <div class="actions">
+      <span id="llmBadge" style="color: var(--text-dim); font-size: 12px; padding: 4px 8px; background: var(--panel-2); border-radius: 4px; border: 1px solid var(--border);">LLM: loading...</span>
+      <button class="primary" onclick="openParseModal()">+ 解析新推文</button>
+    </div>
+  </header>
+
+  <section class="stats" id="stats">
+    <div class="stat-card"><div class="label">总岗位</div><div class="value" id="stat-total">—</div></div>
+    <div class="stat-card" style="border-color:#22c55e;"><div class="label" style="color:#22c55e;">在招</div><div class="value" style="color:#22c55e;" id="stat-open">—</div></div>
+    <div class="stat-card" style="border-color:var(--warn);"><div class="label" style="color:var(--warn);">近期截止 (≤14天)</div><div class="value" style="color:var(--warn);" id="stat-closing">—</div></div>
+    <div class="stat-card" style="border-color:var(--danger);"><div class="label" style="color:var(--danger);">已截止</div><div class="value" style="color:var(--danger);" id="stat-expired">—</div></div>
+    <div class="stat-card"><div class="label">截止未知</div><div class="value" id="stat-unknown">—</div></div>
+  </section>
+
+  <div class="filter-bar">
+    <label>状态<select id="filterStatus">
+      <option value="">全部</option>
+      <option value="pending">待校准</option>
+      <option value="calibrated">已校准</option>
+      <option value="archived">已归档</option>
+    </select></label>
+    <label>行业<select id="filterCategory">
+      <option value="">全部</option>
+      <option value="AI">AI</option>
+      <option value="供应链">供应链</option>
+      <option value="运筹优化">运筹优化</option>
+      <option value="其他">其他</option>
+    </select></label>
+    <label>在招<select id="filterRecruit">
+      <option value="">全部（含过期）</option>
+      <option value="active">仅在招 / 近期截止</option>
+      <option value="open">仅在招（>14天）</option>
+      <option value="expired">仅已过期</option>
+    </select></label>
+    <label>类型<select id="filterJobType">
+      <option value="">全部</option>
+      <option value="校招">校招</option>
+      <option value="社招">社招</option>
+      <option value="实习">实习</option>
+      <option value="不明确">不明确</option>
+    </select></label>
+    <label>公司<input id="filterCompany" placeholder="公司名关键词" /></label>
+    <label>岗位<input id="filterTitle" placeholder="岗位名关键词" /></label>
+    <button onclick="resetFilter()">重置</button>
+  </div>
+
+  <div class="filter-bar" style="padding-top: 0;">
+    <label style="flex:1;">技术栈（多选 → 命中岗位含有全部选中项）
+      <div id="skillChips" class="chip-row"></div>
+    </label>
+    <label style="flex:1;">专业（多选 → 学历要求中含有任一选中专业）
+      <div id="majorChips" class="chip-row"></div>
+    </label>
+  </div>
+
+  <main>
+    <div class="list" id="jobList">
+      <div class="empty">加载中...</div>
+    </div>
+    <div class="detail" id="jobDetail">
+      <div class="empty">选择左侧岗位查看详情</div>
+    </div>
+  </main>
+
+  <div class="modal-bg" id="parseModal">
+    <div class="modal">
+      <h3>解析招聘推文</h3>
+      <p style="color: var(--text-dim); font-size: 12px; margin-top: 4px;">
+        优先用 raw text 字段（复制粘贴正文）。URL 字段填了会被优先尝试，但公众号反爬较强。
+      </p>
+      <label>URL（可选）</label>
+      <input id="parseUrl" placeholder="https://mp.weixin.qq.com/s/..." />
+      <label>正文 raw text</label>
+      <textarea id="parseText" placeholder="把公众号招聘推文正文粘到这里..."></textarea>
+      <label>公司提示（可选）</label>
+      <input id="parseCompany" placeholder="如：字节跳动" />
+      <label>来源等级</label>
+      <select id="parseTier">
+        <option value="P1">P1 企业公众号</option>
+        <option value="P2">P2 招聘平台</option>
+        <option value="P3">P3 公众号转发</option>
+        <option value="P4">P4 小红书等</option>
+      </select>
+      <div class="actions">
+        <button onclick="closeParseModal()">取消</button>
+        <button class="primary" onclick="submitParse()">解析</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+<script>
+let currentJob = null;
+let allJobs = [];
+let selectedSkills = new Set();
+let selectedMajors = new Set();
+
+// 专业关键词字典（用于从 education_text 中识别）
+const MAJOR_KEYWORDS = [
+  '计算机', '软件工程', '人工智能', '电子信息', '电子', '通信', '自动化',
+  '控制', '数学', '统计学', '运筹', '数据科学', '物理', '力学',
+  '机械', '工业工程', '供应链', '物流', '管理', '营销', '经济学',
+  '导航', '测绘', '集成电路', '微电子', '光电', '飞行器', '航空',
+  '图形学', '机器人', '神经科学', '材料', '化学', '生物', '医学', '药学'
+];
+
+// 技能关键词字典（用于从 skills/requirements 中识别）
+const TECH_KEYWORDS = [
+  'Python', 'C++', 'Java', 'Scala', 'Golang', 'TypeScript', 'React', 'Vue',
+  'PyTorch', 'TensorFlow', 'CUDA', 'TensorRT', 'vLLM', 'LangChain',
+  'LLM', 'RAG', 'Agent', 'Prompt', 'NLP', 'CV',
+  'XGBoost', 'GBDT', 'LR', 'MILP', '强化学习', '深度学习', '机器学习',
+  '运筹优化', '因果推断', '图神经网络', 'Diffusion', 'Transformer',
+  'Hadoop', 'Hive', 'Spark', 'Kafka', 'Flink', 'Elasticsearch',
+  'SQL', 'MySQL', 'Redis', 'MongoDB', 'PostgreSQL', 'Snowflake',
+  'Docker', 'Kubernetes', 'Linux', 'AWS', 'GCP', 'Azure',
+  'CAD', 'CFD', 'SLAM', 'ROS', 'VLA', 'NeRF', '3DGS',
+  'Git', 'CI/CD', 'Verilog', 'SystemVerilog', 'UVM', 'FPGA', 'ASIC',
+  'APS', 'S&OP', 'ERP', 'SAP', 'Oracle'
+];
+
+function extractMajors(job) {
+  const text = (job.education_text || '') + ' ' + (job.experience_text || '');
+  const found = new Set();
+  for (const k of MAJOR_KEYWORDS) {
+    if (text.includes(k)) found.add(k);
+  }
+  return Array.from(found);
+}
+
+function extractTechs(job) {
+  const text = (job.skills || []).join(' / ') + ' / ' + (job.responsibilities || []).join(' / ');
+  const found = new Set();
+  for (const k of TECH_KEYWORDS) {
+    if (text.includes(k)) found.add(k);
+  }
+  return Array.from(found);
+}
+
+async function fetchJSON(url, opts = {}) {
+  const resp = await fetch(url, {
+    headers: { 'Content-Type': 'application/json' },
+    ...opts,
+  });
+  if (!resp.ok) {
+    const text = await resp.text();
+    throw new Error(`${resp.status}: ${text}`);
+  }
+  return resp.json();
+}
+
+function showToast(msg, isError = false) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast show' + (isError ? ' error' : '');
+  setTimeout(() => el.className = 'toast', 3000);
+}
+
+async function loadMeta() {
+  try {
+    const meta = await fetchJSON('/');
+    document.getElementById('llmBadge').textContent = 'LLM: ' + meta.llm_provider;
+  } catch (e) { /* ignore */ }
+}
+
+function loadStats() {
+  // 统计：状态 + 在招分布
+  const data = allJobs || [];
+  const counts = { total: data.length, open: 0, closing_soon: 0, expired: 0, unknown: 0 };
+  for (const j of data) {
+    const s = j.recruit_status || 'unknown';
+    if (counts[s] !== undefined) counts[s]++;
+  }
+  document.getElementById('stat-total').textContent = counts.total;
+  document.getElementById('stat-open').textContent = counts.open + counts.closing_soon;
+  document.getElementById('stat-closing').textContent = counts.closing_soon;
+  document.getElementById('stat-expired').textContent = counts.expired;
+  document.getElementById('stat-unknown').textContent = counts.unknown;
+}
+
+async function loadJobs() {
+  const params = new URLSearchParams();
+  const status = document.getElementById('filterStatus').value;
+  const category = document.getElementById('filterCategory').value;
+  const jobType = document.getElementById('filterJobType').value;
+  const recruit = document.getElementById('filterRecruit').value;
+  const company = document.getElementById('filterCompany').value;
+  const title = document.getElementById('filterTitle').value;
+  if (status) params.set('status', status);
+  if (category) params.set('category', category);
+  if (company) params.set('company', company);
+  params.set('limit', '500');
+  const data = await fetchJSON('/jobs?' + params.toString());
+  allJobs = data.jobs || [];
+
+  // 渲染 chip
+  renderChips(allJobs);
+  // 顶部统计（在招分布）
+  loadStats();
+
+  // 前端过滤
+  const filtered = allJobs.filter(j => {
+    if (jobType && (j.job_type || '') !== jobType) return false;
+    if (title && !(j.title || '').includes(title)) return false;
+    if (recruit) {
+      const s = j.recruit_status || 'unknown';
+      if (recruit === 'active' && !(s === 'open' || s === 'closing_soon')) return false;
+      if (recruit === 'open' && s !== 'open') return false;
+      if (recruit === 'expired' && s !== 'expired') return false;
+    }
+    if (selectedSkills.size > 0) {
+      const techs = extractTechs(j);
+      for (const s of selectedSkills) if (!techs.includes(s)) return false;
+    }
+    if (selectedMajors.size > 0) {
+      const majors = extractMajors(j);
+      let hit = false;
+      for (const m of selectedMajors) if (majors.includes(m)) { hit = true; break; }
+      if (!hit) return false;
+    }
+    return true;
+  });
+  // 排序：在招/即将截止 在前，已过期 沉底
+  const order = { closing_soon: 0, open: 1, unknown: 2, expired: 3 };
+  filtered.sort((a, b) => (order[a.recruit_status] ?? 9) - (order[b.recruit_status] ?? 9));
+  renderList(filtered);
+}
+
+function renderChips(jobs) {
+  // 统计每个 chip 的命中岗位数
+  const skillCounts = {};
+  const majorCounts = {};
+  for (const j of jobs) {
+    for (const s of extractTechs(j)) skillCounts[s] = (skillCounts[s] || 0) + 1;
+    for (const m of extractMajors(j)) majorCounts[m] = (majorCounts[m] || 0) + 1;
+  }
+  const skillSorted = Object.entries(skillCounts).sort((a, b) => b[1] - a[1]);
+  const majorSorted = Object.entries(majorCounts).sort((a, b) => b[1] - a[1]);
+
+  const skillEl = document.getElementById('skillChips');
+  skillEl.innerHTML =
+    `<span class="chip-clear" onclick="clearSkills()">清除</span>` +
+    skillSorted.slice(0, 30).map(([k, n]) =>
+      `<span class="chip ${selectedSkills.has(k) ? 'active' : ''}" onclick="toggleSkill('${escapeJs(k)}')">${escapeHtml(k)} <span class="count">${n}</span></span>`
+    ).join('');
+
+  const majorEl = document.getElementById('majorChips');
+  majorEl.innerHTML =
+    `<span class="chip-clear" onclick="clearMajors()">清除</span>` +
+    majorSorted.slice(0, 20).map(([k, n]) =>
+      `<span class="chip ${selectedMajors.has(k) ? 'active' : ''}" onclick="toggleMajor('${escapeJs(k)}')">${escapeHtml(k)} <span class="count">${n}</span></span>`
+    ).join('');
+}
+
+function escapeJs(s) { return s.replace(/['"\\]/g, '\\$&'); }
+
+function toggleSkill(k) {
+  if (selectedSkills.has(k)) selectedSkills.delete(k); else selectedSkills.add(k);
+  loadJobs();
+}
+function toggleMajor(k) {
+  if (selectedMajors.has(k)) selectedMajors.delete(k); else selectedMajors.add(k);
+  loadJobs();
+}
+function clearSkills() { selectedSkills.clear(); loadJobs(); }
+function clearMajors() { selectedMajors.clear(); loadJobs(); }
+
+function renderList(jobs) {
+  const list = document.getElementById('jobList');
+  if (!jobs.length) {
+    list.innerHTML = '<div class="empty">暂无岗位，点击右上角"解析新推文"开始</div>';
+    return;
+  }
+  list.innerHTML = jobs.map(j => {
+      const host = hostOf(j.source_url);
+      const comp = completeness(j);
+      const rs = j.recruit_status || 'unknown';
+      const isExpired = rs === 'expired';
+      return `
+    <div class="card ${currentJob && currentJob.id === j.id ? 'active' : ''} ${isExpired ? 'expired-card' : ''}" data-id="${j.id}" onclick="selectJob(${j.id})">
+      <div class="title">${escapeHtml(j.title || '（未命名）')}</div>
+      <div class="meta">
+        <span>${escapeHtml(j.company || '—')}</span>
+        <span>${escapeHtml(j.location || '—')}</span>
+        <span class="badge ${categoryClass(j.category)}">${escapeHtml(j.category || '其他')}</span>
+        <span class="recruit-badge ${rs}">${recruitLabel(rs)}</span>
+      </div>
+      <div class="source-row">
+        ${j.source_tier ? `<span class="tier-badge ${j.source_tier}">${j.source_tier} ${tierLabel(j.source_tier)}</span>` : '<span style="color:var(--text-dim)">无来源</span>'}
+        ${j.page_kind ? `<span class="kind-badge ${j.page_kind}">${escapeHtml(j.page_kind)}</span>` : ''}
+        ${host ? `<span class="host">${escapeHtml(host)}</span>` : ''}
+        <span class="completeness ${comp.cls}"><span class="bar"><i style="width:${comp.pct}%"></i></span>字段 ${comp.pct}%</span>
+      </div>
+    </div>`;
+    }).join('');
+}
+
+function renderDetail(j) {
+  currentJob = j;
+  const comp = completeness(j);
+  const ex = j.extras || {};
+  const extraFields = ex.extra_fields || {};
+  const extraRows = Object.entries(extraFields)
+    .map(([k, v]) => `<tr><td>${escapeHtml(k)}</td><td>${escapeHtml(v)}</td></tr>`)
+    .join('');
+
+  document.getElementById('jobDetail').innerHTML = `
+    <h2>${escapeHtml(j.title || '（未命名）')}</h2>
+    <div class="sub">
+      <span>${escapeHtml(j.company || '—')}</span> ·
+      <span>${escapeHtml(j.location || '地点未填')}</span> ·
+      <span class="badge ${categoryClass(j.category)}">${escapeHtml(j.category || '其他')}</span>
+      ${j.page_kind ? `<span class="kind-badge ${j.page_kind}">${escapeHtml(j.page_kind)}</span>` : ''}
+      <span class="recruit-badge ${j.recruit_status || 'unknown'}">${recruitLabel(j.recruit_status)}</span>
+      <span class="completeness ${comp.cls}"><span class="bar"><i style="width:${comp.pct}%"></i></span>字段完整度 ${comp.pct}%</span>
+    </div>
+    <div class="deadline-box ${j.recruit_status || 'unknown'}">
+      <div class="label">招聘截止</div>
+      <div class="date">${j.recruit_deadline ? formatDate(j.recruit_deadline) : '— 未知（社招常年在招 / 官方未披露）'}</div>
+      <div class="meta">${deadlineMeta(j)}</div>
+    </div>
+    <div class="field"><div class="field-label">岗位职责</div>
+      ${renderListField(j.responsibilities)}</div>
+    <div class="field"><div class="field-label">招聘要求</div>
+      ${renderListField(j.requirements)}</div>
+    <div class="field"><div class="field-label">技能</div>
+      <div class="skill-list">${(j.skills || []).map(s => `<span class="skill">${escapeHtml(s)}</span>`).join('') || '—'}</div></div>
+    <div class="field"><div class="field-label">薪资</div><div>${escapeHtml(j.salary_text || '原文未披露')}</div>
+      ${(j.extras && j.extras.salary_ref) ? `<div style="margin-top:6px; padding:6px 10px; background: rgba(245, 158, 11, 0.08); border-left: 3px solid var(--warn); border-radius: 4px; font-size: 12px;">
+          <span style="color: var(--warn); font-weight: 600;">${escapeHtml(j.extras.salary_ref_tier || 'P3')} 交叉参考：</span>${escapeHtml(j.extras.salary_ref)}
+          ${j.extras.salary_ref_url ? `<a href="${escapeHtml(j.extras.salary_ref_url)}" target="_blank" rel="noopener" style="color: var(--accent); margin-left: 6px;">↗ 来源</a>` : ''}
+          ${j.extras.salary_ref_note ? `<div style="color: var(--text-dim); margin-top:4px;">${escapeHtml(j.extras.salary_ref_note)}</div>` : ''}
+        </div>` : ''}
+    </div>
+    <div class="field"><div class="field-label">经验 / 学历</div>
+      <div>经验：${escapeHtml(j.experience_text || '—')}</div>
+      <div>学历：${escapeHtml(j.education_text || '—')}</div></div>
+    <div class="field"><div class="field-label">岗位类型</div><div>${escapeHtml(j.job_type || '—')}</div></div>
+    ${extraRows ? `<div class="field"><div class="field-label">补充字段</div>
+      <table class="extra-table">${extraRows}</table></div>` : ''}
+    <div class="field"><div class="field-label">信息来源（必读）</div>
+      ${renderSourceBox(j)}
+    </div>
+    ${j.raw_text ? `<div class="field"><div class="field-label">原文片段</div><pre>${escapeHtml(j.raw_text.slice(0, 500))}${j.raw_text.length > 500 ? '...' : ''}</pre></div>` : ''}
+    <div class="calibrate-bar">
+      <textarea id="calNotes" placeholder="校准备注（可选）">${escapeHtml(j.notes || '')}</textarea>
+      <button class="cal" onclick="calibrate(${j.id}, 'calibrated')" ${j.status === 'calibrated' ? 'disabled' : ''}>✓ 标记已校准</button>
+      <button class="archive" onclick="calibrate(${j.id}, 'archived')">归档</button>
+      ${j.status !== 'pending' ? `<button class="back" onclick="calibrate(${j.id}, 'pending')">↩ 退回待校准</button>` : ''}
+      <button onclick="deleteJob(${j.id})" style="color: var(--danger); border-color: var(--danger);" title="永久删除">🗑 删除</button>
+    </div>
+  `;
+}
+
+function renderListField(arr) {
+  if (!arr || !arr.length) return '<div>—</div>';
+  return `<ul>${arr.map(x => `<li>${escapeHtml(x)}</li>`).join('')}</ul>`;
+}
+
+function tierLabel(t) {
+  return ({P1: '企业官方', P2: '招聘平台', P3: '转发/聚合', P4: 'UGC'})[t] || '';
+}
+
+function hostOf(url) {
+  if (!url) return '';
+  try {
+    const h = new URL(url).hostname;
+    return h.replace(/^www\./, '');
+  } catch { return ''; }
+}
+
+function renderSourceBox(j) {
+  const tier = j.source_tier || '';
+  const host = hostOf(j.source_url);
+  const ex = j.extras || {};
+  const collector = ex.collector || '';
+  const collectorMark = collector
+    ? `⚙ ${escapeHtml(collector === 'agent-webfetch' ? '智能体网页抓取' : collector)}`
+    : (j.source_url ? '手动粘贴' : '<span style="color:var(--danger)">⚠ 无来源记录</span>');
+  const creditNote = ex.credibility_note
+    ? `<div class="note">${escapeHtml(ex.credibility_note)}</div>` : '';
+  const created = j.created_at ? new Date(j.created_at).toLocaleString('zh-CN') : '—';
+  const collectedAt = ex.collected_at ? `<span>采集日期：${escapeHtml(ex.collected_at)}</span>` : '';
+
+  return `
+    <div class="source-box">
+      <div class="row">
+        <span class="key">来源等级</span>
+        ${tier
+          ? `<span class="tier-badge ${tier}">${tier} ${tierLabel(tier)}</span>`
+          : '<span class="val" style="color:var(--danger)">未标记</span>'}
+        ${j.page_kind ? `<span class="kind-badge ${j.page_kind}">${escapeHtml(j.page_kind)}</span>` : ''}
+      </div>
+      <div class="row">
+        <span class="key">采集方式</span>
+        <span class="val">${collectorMark}</span>
+      </div>
+      <div class="row">
+        <span class="key">域名</span>
+        <span class="val" style="font-family: var(--mono);">${host || '—'}</span>
+      </div>
+      <div class="row">
+        <span class="key">原始 URL</span>
+        ${j.source_url
+          ? `<a class="url" href="${escapeHtml(j.source_url)}" target="_blank" rel="noopener">${escapeHtml(j.source_url)}</a>`
+          : '<span class="val" style="color:var(--text-dim)">—</span>'}
+      </div>
+      <div class="row">
+        <span class="key">入库时间</span>
+        <span class="val">${escapeHtml(created)}</span>
+      </div>
+      ${collectedAt ? `<div class="extras">${collectedAt}</div>` : ''}
+      ${creditNote}
+    </div>
+  `;
+}
+
+function completeness(j) {
+  // 核心字段：职责 / 要求 / 技能 / 学历 / 薪资
+  const checks = [
+    (j.responsibilities || []).length > 0,
+    (j.requirements || []).length > 0,
+    (j.skills || []).length > 0,
+    !!(j.education_text || '').trim(),
+    !!(j.salary_text || '').trim() && !/未披露|未提及|面议/.test(j.salary_text || ''),
+  ];
+  const filled = checks.filter(Boolean).length;
+  const pct = Math.round(filled / checks.length * 100);
+  const cls = pct >= 80 ? '' : (pct >= 40 ? 'mid' : 'low');
+  return { pct, cls };
+}
+
+function recruitLabel(s) {
+  return ({open: '在招', closing_soon: '近期截止', expired: '已截止', unknown: '截止未知'})[s] || s;
+}
+
+function formatDate(iso) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  if (isNaN(d)) return iso;
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
+function deadlineMeta(j) {
+  const dl = j.recruit_deadline;
+  const collected = (j.extras && j.extras.collected_at) || '';
+  if (!dl) {
+    return collected ? `采集日期 ${collected} · 原文未披露截止` : '原文未披露截止';
+  }
+  const now = new Date();
+  const d = new Date(dl);
+  const days = Math.round((d - now) / 86400000);
+  let base = '';
+  if (days < 0) base = `已过期 ${Math.abs(days)} 天`;
+  else if (days <= 14) base = `剩余 ${days} 天`;
+  else base = `剩余 ${days} 天`;
+  return `${base} · ${collected ? '采集 ' + collected : '采集日期未记录'}`;
+}
+
+function categoryClass(c) { return 'category-' + (c || '其他'); }
+function statusLabel(s) { return ({pending: '待校准', calibrated: '已校准', archived: '已归档'})[s] || s; }
+
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s).replace(/[&<>"']/g, c => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[c]));
+}
+
+async function selectJob(id) {
+  const j = await fetchJSON('/jobs/' + id);
+  renderDetail(j);
+  renderList(allJobs); // refresh active highlight
+}
+
+async function calibrate(id, status) {
+  const notes = document.getElementById('calNotes').value;
+  await fetchJSON('/jobs/' + id + '/calibrate', {
+    method: 'POST',
+    body: JSON.stringify({ status, notes: notes || null }),
+  });
+  showToast('已更新为：' + statusLabel(status));
+  await loadStats();
+  await loadJobs();
+  const j = await fetchJSON('/jobs/' + id);
+  renderDetail(j);
+}
+
+async function deleteJob(id) {
+  if (!confirm('确定要永久删除这条岗位吗？此操作不可撤销。')) return;
+  try {
+    await fetchJSON('/jobs/' + id, { method: 'DELETE' });
+    currentJob = null;
+    document.getElementById('jobDetail').innerHTML = '<div class="empty">已删除。左侧选择其他岗位。</div>';
+    await loadStats();
+    await loadJobs();
+    showToast('已删除');
+  } catch (e) {
+    showToast('删除失败：' + e.message, true);
+  }
+}
+
+function resetFilter() {
+  document.getElementById('filterStatus').value = '';
+  document.getElementById('filterCategory').value = '';
+  document.getElementById('filterRecruit').value = '';
+  document.getElementById('filterJobType').value = '';
+  document.getElementById('filterCompany').value = '';
+  document.getElementById('filterTitle').value = '';
+  selectedSkills.clear();
+  selectedMajors.clear();
+  loadJobs();
+}
+
+function openParseModal() { document.getElementById('parseModal').classList.add('show'); }
+function closeParseModal() { document.getElementById('parseModal').classList.remove('show'); }
+
+async function submitParse() {
+  const url = document.getElementById('parseUrl').value.trim();
+  const text = document.getElementById('parseText').value.trim();
+  const company = document.getElementById('parseCompany').value.trim();
+  const tier = document.getElementById('parseTier').value;
+  if (!url && !text) { showToast('URL 与正文至少填一个', true); return; }
+  try {
+    const btn = event.target; btn.disabled = true;
+    const r = await fetchJSON('/parse', {
+      method: 'POST',
+      body: JSON.stringify({ url: url || null, text: text || null, company_hint: company || null, source_tier: tier }),
+    });
+    closeParseModal();
+    showToast(`解析完成：插入 ${r.job_count} 个岗位（${r.provider}）`);
+    document.getElementById('parseUrl').value = '';
+    document.getElementById('parseText').value = '';
+    document.getElementById('parseCompany').value = '';
+    await loadStats();
+    await loadJobs();
+    btn.disabled = false;
+  } catch (e) {
+    showToast('解析失败：' + e.message, true);
+    event.target.disabled = false;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadMeta();
+  await loadStats();
+  await loadJobs();
+
+  // 过滤器实时响应
+  ['filterStatus', 'filterCategory'].forEach(id => {
+    document.getElementById(id).addEventListener('change', loadJobs);
+  });
+  let timer;
+  ['filterCompany', 'filterTitle'].forEach(id => {
+    document.getElementById(id).addEventListener('input', () => {
+      clearTimeout(timer);
+      timer = setTimeout(loadJobs, 250);
+    });
+  });
+});
+</script>
+</body>
+</html>

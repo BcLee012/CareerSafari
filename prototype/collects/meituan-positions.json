@@ -1,0 +1,136 @@
+{
+  "source_url": "https://zhaopin.meituan.com/web/position",
+  "source_tier": "P1",
+  "page_kind": "岗位列表页",
+  "credibility_note": "美团官方招聘系统（zhaopin.meituan.com/web/position）。P1 是企业官方招聘页，但仍是列表页，岗位可能已下架；薪资未披露。",
+  "collected_at": "2026-09-13",
+  "collector": "agent-webfetch",
+  "jobs": [
+    {
+      "company": "美团",
+      "title": "大模型算法实习生",
+      "location": "北京",
+      "category": "AI",
+      "job_type": "实习",
+      "education_text": "原文未明确（日常实习）",
+      "experience_text": "日常实习",
+      "salary_text": "未披露",
+      "extra_fields": {
+        "所属业务": "核心本地商业-基础研发平台",
+        "更新于": "2026/09/13"
+      },
+      "skills": [
+        "后训练算法",
+        "结果奖励模型",
+        "过程奖励模型",
+        "Agentic RL",
+        "任务规划",
+        "复杂逻辑推理"
+      ],
+      "responsibilities": [
+        "后训练研究：深入参与模型对齐工作，重点研究多种后训练算法；探索结果奖励和过程奖励模型的构建，提升模型在复杂逻辑下的推理能力",
+        "Agentic RL 优化：针对复杂业务场景，优化 Agent 的任务规划、反思与执行能力；提升模型在长链路任务中的稳定性和成功率"
+      ],
+      "requirements": [
+        "对后训练算法、奖励模型、Agent 优化方向有研究经验",
+        "熟悉 Python、PyTorch 等深度学习框架",
+        "有 LLM 相关项目或竞赛经验者优先"
+      ],
+      "recruit_deadline": "2026-12-31"
+    },
+    {
+      "company": "美团",
+      "title": "预测/决策/大模型应用算法工程师",
+      "location": "北京",
+      "category": "AI",
+      "job_type": "社招",
+      "education_text": "原文未明确",
+      "experience_text": "社招",
+      "salary_text": "未披露",
+      "extra_fields": {
+        "所属业务": "软硬件服务-软件研发部",
+        "更新于": "2026/09/13"
+      },
+      "skills": [
+        "广告策略",
+        "营销增长",
+        "供应链智能预测",
+        "大模型应用",
+        "AI 架构设计"
+      ],
+      "responsibilities": [
+        "主导团队内算法体系的从 0 到 1 建设",
+        "深度参与广告策略、营销增长、供应链智能预测、大模型应用等 AI 方向的整体架构设计与技术路线制定",
+        "推动算法能力成为业务核心竞争力"
+      ],
+      "requirements": [
+        "有广告/营销/大模型应用算法体系搭建经验",
+        "能主导从 0 到 1 的架构设计与团队建设",
+        "具备业务理解和算法落地能力"
+      ],
+      "recruit_deadline": null
+    },
+    {
+      "company": "美团",
+      "title": "到餐-商业分析师（收入管理方向）",
+      "location": "北京",
+      "category": "运筹优化",
+      "job_type": "社招",
+      "education_text": "原文未明确",
+      "experience_text": "社招",
+      "salary_text": "未披露",
+      "extra_fields": {
+        "所属业务": "核心本地商业-到餐事业部",
+        "更新于": "2026/09/13"
+      },
+      "skills": [
+        "定价体系搭建",
+        "商业模式分析",
+        "数据分析",
+        "策略落地管理"
+      ],
+      "responsibilities": [
+        "深入理解到餐业务的商业模式，基于业务发展规划，搭建定价体系，并制定兼具公平性及可解释性的定价方案",
+        "制定定价方案落地管理机制，联动各相关方推动定价方案落地执行，实现业务盈收目标"
+      ],
+      "requirements": [
+        "对本地生活/餐饮到餐业务有商业理解",
+        "有定价/收入管理策略经验",
+        "具备跨部门协作与方案落地能力"
+      ],
+      "recruit_deadline": null
+    },
+    {
+      "company": "美团",
+      "title": "骑行营销算法负责人",
+      "location": "北京",
+      "category": "AI",
+      "job_type": "社招",
+      "education_text": "原文未明确",
+      "experience_text": "社招（leader 岗）",
+      "salary_text": "未披露",
+      "extra_fields": {
+        "所属业务": "软硬件服务-软件研发部",
+        "更新于": "2026/09/13"
+      },
+      "skills": [
+        "用户增长预测",
+        "营销补贴",
+        "卡券推荐排序",
+        "智能营销算法",
+        "团队管理"
+      ],
+      "responsibilities": [
+        "负责美团骑行用户运营核心业务，包括但不限于算法驱动的用户增长预测、营销补贴、套餐卡券推荐排序等",
+        "带领团队设计和优化用户智能营销算法，提升多种营销场景的补贴效率，驱动用户规模与业务收入的双重增长"
+      ],
+      "requirements": [
+        "有用户增长/营销算法实战经验",
+        "有团队管理经验",
+        "熟悉推荐/排序算法"
+      ],
+      "recruit_deadline": null
+    }
+  ],
+  "recruit_deadline": null
+}

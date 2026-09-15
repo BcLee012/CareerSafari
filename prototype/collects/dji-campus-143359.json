@@ -1,0 +1,252 @@
+{
+  "source_url": "https://apply.careers.dji.com/campus-recruitment/dji/143359",
+  "source_tier": "P1",
+  "page_kind": "岗位列表页",
+  "credibility_note": "大疆官方招聘系统页面。P1 是因为域名为企业官方招聘系统（apply.careers.dji.com）；但注意这是「列表页」而非单个岗位详情页——岗位信息随招聘进度动态变化，列表中岗位可能已关闭（需以投递页状态为准）。薪资字段官网普遍不披露。",
+  "collected_at": "2026-09-13",
+  "collector": "agent-webfetch",
+  "fetch_note": "页面共列出 23 个岗位，此处收录与三条目标行业线相关的 8 个；原文有截断。",
+  "jobs": [
+    {
+      "company": "大疆（DJI）",
+      "title": "数字化建设",
+      "location": "深圳",
+      "category": "供应链",
+      "job_type": "校招",
+      "education_text": "本科及以上（原文仅要求理工科背景，未明写学历层次）",
+      "experience_text": "校招应届",
+      "salary_text": "未披露（原文仅表述为「TOP 级薪酬回报，与项目价值相匹配」）",
+      "skills": [
+        "编程语言（至少一种）",
+        "系统/数据建模",
+        "AI 算法应用",
+        "GitHub/Gitee 开源（优先）"
+      ],
+      "responsibilities": [
+        "深入研发、供应链等真实业务场景，将新品预测、分货库存等复杂决策拆解为可量化规则体系",
+        "设计数字化解决方案，将业务逻辑转化为系统功能、数据模型与自动化逻辑",
+        "与业务/产品/开发协作，推进需求、评审、开发、验收，推动自动化智能化",
+        "识别依赖人工经验的环节，探索 AI/算法应用，推动「经验驱动」转「规则与数据驱动」"
+      ],
+      "requirements": [
+        "理工科背景（计算机、软件、AI、自动化等），掌握至少一种编程语言",
+        "具备较完整产品/系统/技术项目经验并承担核心工作，有开源项目贡献者优先",
+        "优秀逻辑思维，能拆解模糊问题",
+        "求知欲、自我驱动、愿意挑战无标准答案的问题",
+        "良好沟通协作能力"
+      ],
+      "recruit_deadline": "2025-08-13"
+    },
+    {
+      "company": "大疆（DJI）",
+      "title": "大模型推理部署算法工程师",
+      "location": "深圳 / 上海 / 北京",
+      "category": "AI",
+      "job_type": "校招",
+      "education_text": "硕士及以上",
+      "experience_text": "校招应届",
+      "salary_text": "未披露",
+      "skills": [
+        "C++/CUDA/Python",
+        "TensorRT / TensorRT-LLM / vLLM / TVM / MNN / NCNN / llama.cpp（至少一种）",
+        "模型量化（INT8/INT4/FP8）、剪枝、蒸馏、稀疏化",
+        "Transformer / Diffusion / VLM 结构与推理瓶颈",
+        "PagedAttention、自定义算子、编译器开发（加分）"
+      ],
+      "responsibilities": [
+        "大模型压缩算法在端-边-云多端落地",
+        "高性能算子开发、推理图优化与多硬件适配",
+        "推理服务治理（动态批处理、多模型调度等）",
+        "牵引模型与自研芯片垂直整合，参与下一代芯片算法需求定义"
+      ],
+      "requirements": [
+        "硕士及以上学历",
+        "扎实的 C++/CUDA/Python 工程能力",
+        "熟悉至少一种主流推理框架（TensorRT/TensorRT-LLM/vLLM/TVM/MNN/NCNN/llama.cpp）",
+        "模型量化、剪枝、蒸馏、稀疏化任一方向有实战经验",
+        "理解 Transformer、Diffusion、VLM 结构与推理瓶颈",
+        "加分：顶会一作论文、端侧量产部署经验、自定义算子/编译器开发"
+      ],
+      "recruit_deadline": "2025-08-13"
+    },
+    {
+      "company": "大疆（DJI）",
+      "title": "机器学习算法工程师",
+      "location": "深圳",
+      "category": "AI",
+      "job_type": "校招",
+      "education_text": "本科及以上（计算机、自动化、电子信息等优先）",
+      "experience_text": "校招应届",
+      "salary_text": "未披露",
+      "skills": [
+        "目标跟随 / 语义分割 / 图像增强等图像算法",
+        "模型压缩技术",
+        "推理加速框架",
+        "大模型结构研发或端侧部署（优先）",
+        "软硬件联合设计（优先）"
+      ],
+      "responsibilities": [
+        "机器学习（视觉、多模态、大模型）前沿技术研究",
+        "特定业务场景模型深度优化（压缩与性能调优）",
+        "算法优化平台建设与维护",
+        "面向未来的神经网络软硬件联合优化"
+      ],
+      "requirements": [
+        "本科及以上，计算机、自动化、电子信息等相关专业优先",
+        "有目标跟随、语义分割、图像增强等图像算法科研经验",
+        "有模型压缩技术经验",
+        "熟悉常见推理加速框架",
+        "优先：大模型结构研发或端侧部署经验、软硬件联合设计经验"
+      ],
+      "recruit_deadline": "2025-08-13"
+    },
+    {
+      "company": "大疆（DJI）",
+      "title": "空间智能基础模型算法工程师",
+      "location": "深圳",
+      "category": "AI",
+      "job_type": "校招",
+      "education_text": "硕士及以上（计算机、电子、自动化、数学、物理等）",
+      "experience_text": "校招应届",
+      "salary_text": "未披露",
+      "skills": [
+        "深度学习与三维视觉",
+        "PyTorch / CUDA",
+        "大规模训练经验",
+        "3D 视觉（DUSt3R / 3DGS / NeRF 等）"
+      ],
+      "responsibilities": [
+        "空间几何与语义统一基础模型的预训练/后训练",
+        "多模态下游任务适配与数据策略",
+        "端-边-云接口设计与对接",
+        "跟进 3D 视觉基础模型进展并落地"
+      ],
+      "requirements": [
+        "硕士及以上，计算机、电子、自动化、数学、物理等相关专业",
+        "扎实的深度学习与三维视觉基础",
+        "熟练使用 PyTorch/CUDA，有大规模训练经验",
+        "在 3D 视觉分支（DUSt3R/3DGS/NeRF 等）有深入实践",
+        "加分：顶会论文、十亿级参数训练经验、开源贡献"
+      ],
+      "recruit_deadline": "2025-08-13"
+    },
+    {
+      "company": "大疆（DJI）",
+      "title": "端到端决策规划算法工程师",
+      "location": "北京",
+      "category": "运筹优化",
+      "job_type": "校招",
+      "education_text": "硕士及以上（计算机、自动化、机器人、电子等）",
+      "experience_text": "校招应届",
+      "salary_text": "未披露",
+      "skills": [
+        "深度学习 / PyTorch / CUDA",
+        "Transformer / Diffusion / 模仿学习 / 强化学习",
+        "VLA / 端到端自动驾驶 / 机器人策略 / 世界模型（至少一项深入实践）"
+      ],
+      "responsibilities": [
+        "端到端模型算法设计、训练与端侧部署",
+        "范式预研（模仿学习 / 强化学习 / 奖励模型）",
+        "真实场景评测与失效归因",
+        "端云协同快慢系统协议设计"
+      ],
+      "requirements": [
+        "硕士及以上，计算机、自动化、机器人、电子等相关专业",
+        "扎实的深度学习基础，熟练使用 PyTorch/CUDA",
+        "理解 Transformer/Diffusion/模仿学习/强化学习",
+        "在 VLA、端到端自动驾驶、机器人策略、世界模型中至少一项有深入实践",
+        "加分：顶会论文、主流 VLA 复现、真实机器人部署经验"
+      ],
+      "recruit_deadline": "2025-08-13"
+    },
+    {
+      "company": "大疆（DJI）",
+      "title": "世界模型算法工程师",
+      "location": "北京",
+      "category": "AI",
+      "job_type": "校招",
+      "education_text": "硕士及以上（计算机、电子、自动化、图形学等）",
+      "experience_text": "校招应届",
+      "salary_text": "未披露",
+      "skills": [
+        "三维视觉 / 神经渲染 / 生成模型",
+        "PyTorch / CUDA",
+        "3DGS / 4DGS / NeRF / Diffusion / 世界模型（至少一项）"
+      ],
+      "responsibilities": [
+        "大规模 3D/4D 场景重建与新视角合成",
+        "可控视频生成与场景编辑",
+        "仿真平台与训练链路集成",
+        "跟进世界模型前沿并落地"
+      ],
+      "requirements": [
+        "硕士及以上，计算机、电子、自动化、图形学等相关专业",
+        "有三维视觉/神经渲染/生成模型基础，熟练使用 PyTorch/CUDA",
+        "在 3DGS/4DGS/NeRF/Diffusion/世界模型中至少一项有实践",
+        "加分：顶会论文、Sora 等复现经验、开源框架贡献"
+      ],
+      "recruit_deadline": "2025-08-13"
+    },
+    {
+      "company": "大疆（DJI）",
+      "title": "SLAM 算法工程师",
+      "location": "北京",
+      "category": "AI",
+      "job_type": "校招",
+      "education_text": "硕士及以上（计算机、自动化、机器人、电子等）",
+      "experience_text": "校招应届",
+      "salary_text": "未披露",
+      "skills": [
+        "多视图几何 / 状态估计 / 深度学习",
+        "C++ / Python / PyTorch / CUDA",
+        "Learning-based SLAM / 3DGS-SLAM / 视觉惯性紧融合（至少一项）"
+      ],
+      "responsibilities": [
+        "新一代 AI 化 SLAM 研发落地",
+        "3D 视觉基础模型在 SLAM 中的应用与轻量化",
+        "机器学习视觉/惯性紧融合 SLAM 迭代",
+        "复杂场景鲁棒性难题攻克"
+      ],
+      "requirements": [
+        "硕士及以上，计算机、自动化、机器人、电子等相关专业",
+        "有多视图几何、状态估计、深度学习基础，熟练 C++/Python/PyTorch/CUDA",
+        "在 Learning-based SLAM、3DGS-SLAM、视觉紧融合中至少一项有实践",
+        "加分：顶会论文、代表性 SLAM 工作复现、端侧部署经验"
+      ],
+      "recruit_deadline": "2025-08-13"
+    },
+    {
+      "company": "大疆（DJI）",
+      "title": "产品售后服务岗",
+      "location": "深圳",
+      "category": "供应链",
+      "job_type": "校招",
+      "education_text": "本科及以上（工商管理、市场营销、经济学等优先，优秀者不限）",
+      "experience_text": "校招应届",
+      "salary_text": "未披露",
+      "skills": [
+        "数据分析 / 结构化表达",
+        "Excel / PPT",
+        "数据建模 / 成本测算（优先）",
+        "服务运营 / 供应链 / 咨询实习经历（优先）"
+      ],
+      "responsibilities": [
+        "服务模式与网络设计",
+        "供管策略设计",
+        "业务流程设计",
+        "服务产品设计（Care 等）",
+        "舆情策略与口碑运营",
+        "服务政策设计管理",
+        "行业洞察"
+      ],
+      "requirements": [
+        "本科及以上，工商管理、市场营销、经济学等专业优先，优秀者不限专业",
+        "具备数据分析、逻辑思维、结构化表达能力，熟练使用 Excel/PPT",
+        "有数据建模/成本测算经验者优先",
+        "有服务运营/供应链/咨询实习经历者优先"
+      ],
+      "recruit_deadline": "2025-08-13"
+    }
+  ],
+  "recruit_deadline": "2025-08-13"
+}

@@ -1,0 +1,44 @@
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# ---------- 虚拟环境 ----------
+.venv/
+venv/
+env/
+ENV/
+
+# ---------- 密钥 / 环境变量（务必不要提交） ----------
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+*.p12
+
+# ---------- 数据库（由 collects/*.json 经 load_collects.py 重建，不入库） ----------
+prototype/data/*.db
+prototype/data/*.db-journal
+prototype/data/*.db-wal
+prototype/data/*.sqlite
+prototype/data/*.sqlite3
+
+# ---------- 运行 / 采集临时产物 ----------
+*.log
+prototype/collects/_tmp_*
+prototype/collects/*.tmp.json
+
+# ---------- 编辑器 / 系统 ----------
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# ---------- 智能体本地工作记忆（如需一并同步，删掉下面这行） ----------
+.workbuddy/

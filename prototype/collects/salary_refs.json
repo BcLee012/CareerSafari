@@ -1,0 +1,14 @@
+{
+  "_schema": "salary_refs",
+  "_description": "P3 第三方来源的薪资参考数据。按 (company, category, job_type) 匹配后，会合到目标岗位的 extras.salary_ref。不会覆盖 salary_text，仅作补充。",
+  "collected_at": "2026-09-13",
+  "refs": [
+    {
+      "match": { "company": "滴滴", "category": "运筹优化", "job_type": "实习" },
+      "salary_ref": "300-400 元/天",
+      "tier": "P3",
+      "evidence_url": "https://www.quanzhi.com/job/6a9793db67c5b4892cc35397",
+      "evidence_note": "全职招聘网转载（自称来源实习僧 2026-09-02），岗位 Marketplace-算法实习生（智能决策/仿真方向），硕士及以上，5 天/周，4 个月"
+    }
+  ]
+}
