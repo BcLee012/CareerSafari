@@ -1,0 +1,24 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      # 必填：写操作（解析 / 校准 / 删除）的管理令牌。
+      # 未设置时写接口会全部返回 503（fail closed），而不是放行。
+      ADMIN_TOKEN: ${ADMIN_TOKEN:?请先设置 ADMIN_TOKEN，例如 ADMIN_TOKEN=$(openssl rand -hex 24)}
+      # LLM 抽取后端：mock | openai | anthropic | qwen
+      LLM_PROVIDER: ${LLM_PROVIDER:-mock}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      QWEN_API_KEY: ${QWEN_API_KEY:-}
+      QWEN_BASE_URL: ${QWEN_BASE_URL:-}
+      CAREERSAFARI_DB: /app/data/careersafari.db
+    volumes:
+      # SQLite 文件持久化。数据源头是 collects/*.json，这里存的是可重建的构建产物。
+      - careersafari-data:/app/data
+    restart: unless-stopped
+
+volumes:
+  careersafari-data:

@@ -3,7 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>职为你而来 · CareerSafari</title>
+  <title>职为你而来 · CareerSafari — AI / 供应链 / 运筹优化岗位信息导航</title>
+  <meta name="description" content="CareerSafari（职为你而来）把散落在企业官网、公众号、招聘平台上的 AI、供应链、运筹优化岗位信息，整理成带来源可信度标注、可对比的结构化岗位库。" />
+  <meta name="keywords" content="招聘信息,岗位信息,AI岗位,供应链岗位,运筹优化,算法工程师,校招,实习,求职导航" />
+  <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#0f1115" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="CareerSafari" />
+  <meta property="og:title" content="职为你而来 · CareerSafari" />
+  <meta property="og:description" content="AI / 供应链 / 运筹优化方向的求职信息导航，岗位信息带来源可信度标注与在招状态。" />
+  <meta property="og:locale" content="zh_CN" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230f1115'/><text x='50' y='74' font-size='62' font-family='sans-serif' text-anchor='middle' fill='%233a86ff'>C</text></svg>" />
   <style>
     :root {
       --bg: #0f1115;
@@ -112,7 +122,6 @@
     .chip-clear:hover { color: var(--danger); border-color: var(--danger); }
 
     main { padding: 24px 28px; display: grid; grid-template-columns: 1fr 1.4fr; gap: 24px; }
-    @media (max-width: 1100px) { main { grid-template-columns: 1fr; } }
 
     .list { display: flex; flex-direction: column; gap: 12px; max-height: calc(100vh - 240px); overflow-y: auto; padding-right: 4px; }
     .card {
@@ -304,16 +313,100 @@
     .toast { position: fixed; bottom: 24px; right: 24px; background: var(--panel-2); border: 1px solid var(--accent); padding: 12px 18px; border-radius: 6px; z-index: 200; display: none; }
     .toast.show { display: block; }
     .toast.error { border-color: var(--danger); }
+
+    /* 管理令牌状态按钮 */
+    .token-btn {
+      background: var(--panel-2); color: var(--text-dim);
+      border: 1px solid var(--border); border-radius: 6px;
+      padding: 7px 12px; font-size: 12px; cursor: pointer;
+      font-family: var(--font);
+    }
+    .token-btn:hover { border-color: var(--accent); color: var(--text); }
+    .token-btn.set { color: var(--calibrated); border-color: rgba(45, 212, 191, 0.4); }
+
+    /* 移动端返回按钮（宽屏隐藏） */
+    .detail-back {
+      display: none; align-items: center; gap: 6px;
+      margin-bottom: 14px; padding: 8px 14px;
+      background: var(--panel-2); color: var(--text);
+      border: 1px solid var(--border); border-radius: 6px;
+      font-size: 13px; cursor: pointer; font-family: var(--font);
+    }
+
+    /* 列表加载提示 */
+    .list-meta {
+      color: var(--text-dim); font-size: 12px;
+      padding: 0 2px 10px; display: flex; justify-content: space-between; gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* 页面页脚 */
+    .page-footer {
+      border-top: 1px solid var(--border);
+      margin-top: 8px;
+      padding: 18px 28px;
+      color: var(--text-dim); font-size: 12px;
+      display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    }
+    .page-footer a { color: var(--accent); }
+
+    /* ---------- 响应式：平板 ---------- */
+    @media (max-width: 1100px) {
+      main { grid-template-columns: 1fr; padding: 18px 20px; }
+      .list, .detail { max-height: none; }
+    }
+
+    /* ---------- 响应式：手机 ---------- */
+    @media (max-width: 720px) {
+      header.top { padding: 14px 16px; gap: 10px; }
+      .brand h1 { font-size: 17px; }
+      .brand small { font-size: 11px; }
+      .actions { width: 100%; }
+
+      .stats { padding: 12px 16px; gap: 8px; }
+      .stat-card { flex: 1 1 calc(50% - 8px); min-width: 0; padding: 8px 12px; }
+      .stat-card .value { font-size: 18px; }
+      .stat-card .label { font-size: 11px; }
+
+      .filter-bar { padding: 12px 16px; gap: 10px; }
+      .filter-bar label { flex: 1 1 100%; }
+      .filter-bar input, .filter-bar select { width: 100%; min-width: 0; }
+      /* 触控目标不要小于 40px，否则手机上很难点 */
+      .filter-bar input, .filter-bar select, button { min-height: 40px; }
+      .chip { padding: 7px 12px; font-size: 12px; }
+      .chip-row { gap: 8px; }
+
+      main { padding: 14px 16px; gap: 16px; }
+      .card { padding: 12px 14px; }
+      .detail { padding: 16px; }
+      .detail h2 { font-size: 16px; }
+
+      .modal { padding: 18px; max-height: 88vh; }
+      .modal .actions { flex-direction: column-reverse; }
+      .modal .actions button { width: 100%; }
+      .calibrate-bar button { flex: 1 1 auto; }
+
+      .toast { left: 16px; right: 16px; bottom: 16px; text-align: center; }
+
+      .page-footer { padding: 16px; flex-direction: column; }
+
+      /* 选中岗位后隐藏列表，避免在长列表下方找详情 */
+      .detail-back { display: inline-flex; }
+      body.mobile-detail .list { display: none; }
+      body.mobile-detail .stats,
+      body.mobile-detail .filter-bar { display: none; }
+    }
   </style>
 </head>
 <body>
   <header class="top">
     <div class="brand">
       <h1>职为你而来</h1>
-      <small>CareerSafari · W1 prototype</small>
+      <small>CareerSafari · AI / 供应链 / 运筹优化 岗位信息导航</small>
     </div>
     <div class="actions">
       <span id="llmBadge" style="color: var(--text-dim); font-size: 12px; padding: 4px 8px; background: var(--panel-2); border-radius: 4px; border: 1px solid var(--border);">LLM: loading...</span>
+      <button class="token-btn" id="tokenBtn" onclick="editToken()" title="写操作（解析 / 校准 / 删除）需要管理令牌">令牌未设置</button>
       <button class="primary" onclick="openParseModal()">+ 解析新推文</button>
     </div>
   </header>
@@ -376,6 +469,11 @@
     </div>
   </main>
 
+  <footer class="page-footer">
+    <span>CareerSafari · 求职信息整理，仅供参考 · 本站不提供招聘服务</span>
+    <a href="/disclaimer">数据来源与免责声明</a>
+  </footer>
+
   <div class="modal-bg" id="parseModal">
     <div class="modal">
       <h3>解析招聘推文</h3>
@@ -397,7 +495,7 @@
       </select>
       <div class="actions">
         <button onclick="closeParseModal()">取消</button>
-        <button class="primary" onclick="submitParse()">解析</button>
+        <button class="primary" onclick="submitParse(this)">解析</button>
       </div>
     </div>
   </div>
@@ -407,6 +505,7 @@
 <script>
 let currentJob = null;
 let allJobs = [];
+let totalCount = 0;
 let selectedSkills = new Set();
 let selectedMajors = new Set();
 
@@ -452,14 +551,71 @@ function extractTechs(job) {
   return Array.from(found);
 }
 
-async function fetchJSON(url, opts = {}) {
-  const resp = await fetch(url, {
-    headers: { 'Content-Type': 'application/json' },
-    ...opts,
-  });
+/** 只放行 http/https，阻断 javascript:、data: 等伪协议 —— 防存储型 XSS。
+ *  后端出站时也会收敛一次，这里是双保险（历史数据可能已存脏 URL）。 */
+function safeUrl(u) {
+  if (!u) return null;
+  try {
+    const parsed = new URL(String(u), window.location.origin);
+    return (parsed.protocol === 'http:' || parsed.protocol === 'https:') ? parsed.href : null;
+  } catch { return null; }
+}
+
+// ---------- 管理令牌 ----------
+
+const TOKEN_KEY = 'cs_admin_token';
+function getToken() { return localStorage.getItem(TOKEN_KEY) || ''; }
+
+function setToken(t) {
+  if (t) localStorage.setItem(TOKEN_KEY, t);
+  else localStorage.removeItem(TOKEN_KEY);
+  renderTokenBtn();
+}
+
+function renderTokenBtn() {
+  const btn = document.getElementById('tokenBtn');
+  if (!btn) return;
+  if (getToken()) { btn.textContent = '令牌已设置'; btn.classList.add('set'); }
+  else { btn.textContent = '令牌未设置'; btn.classList.remove('set'); }
+}
+
+function editToken() {
+  const input = prompt(
+    '写操作（解析 / 校准 / 删除）需要服务端配置的 ADMIN_TOKEN。\n留空并确定可清除已保存的令牌。',
+    getToken()
+  );
+  if (input === null) return;
+  setToken(input.trim());
+  showToast(input.trim() ? '令牌已保存到本机浏览器' : '令牌已清除');
+}
+
+async function fetchJSON(url, opts = {}, _retried = false) {
+  const headers = { 'Content-Type': 'application/json', ...(opts.headers || {}) };
+  const token = getToken();
+  if (token) headers['X-Admin-Token'] = token;
+
+  const resp = await fetch(url, { ...opts, headers });
+
+  // 401：令牌缺失或错误 → 就地提示输入，成功后自动重试一次
+  if (resp.status === 401 && !_retried) {
+    const input = prompt('该操作需要管理令牌，请输入服务端配置的 ADMIN_TOKEN：');
+    if (input && input.trim()) {
+      setToken(input.trim());
+      return fetchJSON(url, opts, true);
+    }
+    throw new Error('需要管理令牌，已取消');
+  }
+  // 503：服务端根本没配 ADMIN_TOKEN，写操作处于关闭状态
+  if (resp.status === 503) {
+    let detail = '写操作未启用（服务端未配置 ADMIN_TOKEN）';
+    try { detail = (await resp.json()).detail || detail; } catch { /* ignore */ }
+    throw new Error(detail);
+  }
+  if (resp.status === 429) throw new Error('请求过于频繁，请稍后再试');
+
   if (!resp.ok) {
     const text = await resp.text();
-    throw new Error(`${resp.status}: ${text}`);
+    throw new Error(`${resp.status}: ${text.slice(0, 200)}`);
   }
   return resp.json();
 }
@@ -471,49 +627,67 @@ function showToast(msg, isError = false) {
   setTimeout(() => el.className = 'toast', 3000);
 }
 
-async function loadMeta() {
+/** 顶部统计改为由服务端聚合 —— 前端只加载了部分数据时不会再算错。 */
+async function loadStats() {
   try {
-    const meta = await fetchJSON('/');
-    document.getElementById('llmBadge').textContent = 'LLM: ' + meta.llm_provider;
-  } catch (e) { /* ignore */ }
+    const s = await fetchJSON('/stats');
+    const rs = s.by_recruit_status || {};
+    document.getElementById('stat-total').textContent = s.total ?? 0;
+    document.getElementById('stat-open').textContent = (rs.open || 0) + (rs.closing_soon || 0);
+    document.getElementById('stat-closing').textContent = rs.closing_soon || 0;
+    document.getElementById('stat-expired').textContent = rs.expired || 0;
+    document.getElementById('stat-unknown').textContent = rs.unknown || 0;
+
+    const parts = [`LLM: ${s.llm_provider || 'unknown'}`, `${s.companies ?? 0} 家公司`];
+    if (s.write_enabled === false) parts.push('写操作已关闭');
+    document.getElementById('llmBadge').textContent = parts.join(' · ');
+  } catch (e) {
+    console.warn('统计加载失败', e);
+  }
 }
 
-function loadStats() {
-  // 统计：状态 + 在招分布
-  const data = allJobs || [];
-  const counts = { total: data.length, open: 0, closing_soon: 0, expired: 0, unknown: 0 };
-  for (const j of data) {
-    const s = j.recruit_status || 'unknown';
-    if (counts[s] !== undefined) counts[s]++;
+const JOBS_PAGE_SIZE = 200;
+const JOBS_FETCH_CAP = 2000; // 前端聚合上限；超出后 chip 统计只覆盖已加载部分
+
+/** 逐页拉全量。chip 过滤（技术栈/专业）在前端做，需要完整数据集才能统计准确。 */
+async function fetchAllJobs(baseParams) {
+  const collected = [];
+  let total = 0;
+  let offset = 0;
+  while (collected.length < JOBS_FETCH_CAP) {
+    const params = new URLSearchParams(baseParams);
+    params.set('limit', String(JOBS_PAGE_SIZE));
+    params.set('offset', String(offset));
+    const data = await fetchJSON('/jobs?' + params.toString());
+    total = data.total ?? 0;
+    const batch = data.jobs || [];
+    if (!batch.length) break;
+    collected.push(...batch);
+    offset += batch.length;
+    if (collected.length >= total) break;
   }
-  document.getElementById('stat-total').textContent = counts.total;
-  document.getElementById('stat-open').textContent = counts.open + counts.closing_soon;
-  document.getElementById('stat-closing').textContent = counts.closing_soon;
-  document.getElementById('stat-expired').textContent = counts.expired;
-  document.getElementById('stat-unknown').textContent = counts.unknown;
+  return { jobs: collected, total };
 }
 
 async function loadJobs() {
-  const params = new URLSearchParams();
+  const base = {};
   const status = document.getElementById('filterStatus').value;
   const category = document.getElementById('filterCategory').value;
   const jobType = document.getElementById('filterJobType').value;
   const recruit = document.getElementById('filterRecruit').value;
   const company = document.getElementById('filterCompany').value;
   const title = document.getElementById('filterTitle').value;
-  if (status) params.set('status', status);
-  if (category) params.set('category', category);
-  if (company) params.set('company', company);
-  params.set('limit', '500');
-  const data = await fetchJSON('/jobs?' + params.toString());
-  allJobs = data.jobs || [];
+  if (status) base.status = status;
+  if (category) base.category = category;
+  if (company) base.company = company;
 
-  // 渲染 chip
+  const { jobs, total } = await fetchAllJobs(base);
+  allJobs = jobs;
+  totalCount = total;
+
   renderChips(allJobs);
-  // 顶部统计（在招分布）
   loadStats();
 
-  // 前端过滤
   const filtered = allJobs.filter(j => {
     if (jobType && (j.job_type || '') !== jobType) return false;
     if (title && !(j.title || '').includes(title)) return false;
@@ -583,10 +757,16 @@ function clearMajors() { selectedMajors.clear(); loadJobs(); }
 function renderList(jobs) {
   const list = document.getElementById('jobList');
   if (!jobs.length) {
-    list.innerHTML = '<div class="empty">暂无岗位，点击右上角"解析新推文"开始</div>';
+    list.innerHTML = '<div class="empty">没有符合条件的岗位。试着放宽筛选条件，或点右上角「解析新推文」新增。</div>';
     return;
   }
-  list.innerHTML = jobs.map(j => {
+  const truncated = totalCount > allJobs.length;
+  const meta = `
+    <div class="list-meta">
+      <span>显示 ${jobs.length} 条${jobs.length !== allJobs.length ? ` · 筛选自 ${allJobs.length} 条` : ''}</span>
+      <span>库内共 ${totalCount} 条${truncated ? ` · 已加载 ${allJobs.length}` : ''}</span>
+    </div>`;
+  list.innerHTML = meta + jobs.map(j => {
       const host = hostOf(j.source_url);
       const comp = completeness(j);
       const rs = j.recruit_status || 'unknown';
@@ -620,6 +800,7 @@ function renderDetail(j) {
     .join('');
 
   document.getElementById('jobDetail').innerHTML = `
+    <button class="detail-back" onclick="closeDetail()">← 返回列表</button>
     <h2>${escapeHtml(j.title || '（未命名）')}</h2>
     <div class="sub">
       <span>${escapeHtml(j.company || '—')}</span> ·
@@ -716,9 +897,12 @@ function renderSourceBox(j) {
       </div>
       <div class="row">
         <span class="key">原始 URL</span>
-        ${j.source_url
-          ? `<a class="url" href="${escapeHtml(j.source_url)}" target="_blank" rel="noopener">${escapeHtml(j.source_url)}</a>`
-          : '<span class="val" style="color:var(--text-dim)">—</span>'}
+        ${(() => {
+          if (!j.source_url) return '<span class="val" style="color:var(--text-dim)">—</span>';
+          const href = safeUrl(j.source_url);
+          if (!href) return '<span class="val" style="color:var(--danger)">⚠ 链接协议不受支持，已屏蔽</span>';
+          return `<a class="url" href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">${escapeHtml(j.source_url)}</a>`;
+        })()}
       </div>
       <div class="row">
         <span class="key">入库时间</span>
@@ -786,22 +970,48 @@ function escapeHtml(s) {
 }
 
 async function selectJob(id) {
-  const j = await fetchJSON('/jobs/' + id);
+  let j;
+  try {
+    j = await fetchJSON('/jobs/' + id);
+  } catch (e) {
+    showToast('加载失败：' + e.message, true);
+    return;
+  }
   renderDetail(j);
-  renderList(allJobs); // refresh active highlight
+  renderList(allJobs); // 刷新选中态
+
+  // 窄屏：隐藏列表、聚焦详情 —— 否则用户要在长列表下方找详情
+  if (window.matchMedia('(max-width: 720px)').matches) {
+    document.body.classList.add('mobile-detail');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function closeDetail() {
+  document.body.classList.remove('mobile-detail');
+  currentJob = null;
+  renderList(allJobs);
 }
 
 async function calibrate(id, status) {
   const notes = document.getElementById('calNotes').value;
-  await fetchJSON('/jobs/' + id + '/calibrate', {
-    method: 'POST',
-    body: JSON.stringify({ status, notes: notes || null }),
-  });
+  try {
+    await fetchJSON('/jobs/' + id + '/calibrate', {
+      method: 'POST',
+      body: JSON.stringify({ status, notes: notes || null }),
+    });
+  } catch (e) {
+    showToast('校准失败：' + e.message, true);
+    return;
+  }
   showToast('已更新为：' + statusLabel(status));
   await loadStats();
   await loadJobs();
-  const j = await fetchJSON('/jobs/' + id);
-  renderDetail(j);
+  try {
+    renderDetail(await fetchJSON('/jobs/' + id));
+  } catch (e) {
+    showToast('刷新详情失败：' + e.message, true);
+  }
 }
 
 async function deleteJob(id) {
@@ -833,47 +1043,59 @@ function resetFilter() {
 function openParseModal() { document.getElementById('parseModal').classList.add('show'); }
 function closeParseModal() { document.getElementById('parseModal').classList.remove('show'); }
 
-async function submitParse() {
+async function submitParse(btn) {
   const url = document.getElementById('parseUrl').value.trim();
   const text = document.getElementById('parseText').value.trim();
   const company = document.getElementById('parseCompany').value.trim();
   const tier = document.getElementById('parseTier').value;
   if (!url && !text) { showToast('URL 与正文至少填一个', true); return; }
+  if (btn) btn.disabled = true;
   try {
-    const btn = event.target; btn.disabled = true;
     const r = await fetchJSON('/parse', {
       method: 'POST',
       body: JSON.stringify({ url: url || null, text: text || null, company_hint: company || null, source_tier: tier }),
     });
     closeParseModal();
-    showToast(`解析完成：插入 ${r.job_count} 个岗位（${r.provider}）`);
+    showToast(`解析完成：新增 ${r.job_count} 个岗位（${r.provider}）`);
     document.getElementById('parseUrl').value = '';
     document.getElementById('parseText').value = '';
     document.getElementById('parseCompany').value = '';
-    await loadStats();
     await loadJobs();
-    btn.disabled = false;
   } catch (e) {
     showToast('解析失败：' + e.message, true);
-    event.target.disabled = false;
+  } finally {
+    if (btn) btn.disabled = false;
   }
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-  await loadMeta();
-  await loadStats();
-  await loadJobs();
+  renderTokenBtn();
 
-  // 过滤器实时响应
-  ['filterStatus', 'filterCategory'].forEach(id => {
-    document.getElementById(id).addEventListener('change', loadJobs);
+  try {
+    await loadJobs(); // 内部会刷新统计
+  } catch (e) {
+    showToast('加载岗位失败：' + e.message, true);
+    loadStats();
+  }
+
+  const reload = () => loadJobs().catch(e => showToast('加载失败：' + e.message, true));
+
+  // 修复：之前「在招」「类型」两个下拉没绑定事件，改了不生效
+  ['filterStatus', 'filterCategory', 'filterRecruit', 'filterJobType'].forEach(id => {
+    document.getElementById(id).addEventListener('change', reload);
   });
+
   let timer;
   ['filterCompany', 'filterTitle'].forEach(id => {
     document.getElementById(id).addEventListener('input', () => {
       clearTimeout(timer);
-      timer = setTimeout(loadJobs, 250);
+      timer = setTimeout(reload, 250);
     });
+  });
+
+  // Esc 关闭解析弹窗
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeParseModal();
   });
 });
 </script>

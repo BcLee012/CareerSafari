@@ -173,8 +173,10 @@ def main() -> None:
                   f"职责{len(d.responsibilities)}条 要求{len(d.requirements)}条 技能{len(d.skills)}项 {dl_mark}")
 
         if not args.dry_run:
-            # 逐条插入，每条带各自的 deadline
-            ids = []
+            # 逐条插入，每条带各自的 deadline。
+            # storage.insert_jobs 默认跳过 (company,title,location) 已存在的记录，
+            # 所以重复导入是幂等的 —— 因此 ids 可能为空，不要再写 ids[0]。
+            ids: list[int] = []
             for d, dl in zip(drafts, per_job_dls):
                 ids.extend(storage.insert_jobs(
                     [d],
@@ -183,20 +185,21 @@ def main() -> None:
                     page_kind=meta["page_kind"],
                     recruit_deadline=dl,
                 ))
-                if dl and not args.dry_run:
-                    pass  # DEBUG_OK
-            print(f"   → 已入库 ids={ids[0]}..{ids[-1]}（共 {len(ids)} 条）")
+            if ids:
+                print(f"   → 新增 {len(ids)} 条（ids {ids[0]}..{ids[-1]}），"
+                      f"跳过 {len(drafts) - len(ids)} 条已存在")
+            else:
+                print(f"   → 全部 {len(drafts)} 条已存在，跳过（幂等导入）")
         total_jobs += len(drafts)
 
     if not args.dry_run:
-        print(f"\n✅ 共导入 {total_jobs} 个岗位。数据库现状：{storage.stats()}")
-        # 跑完后再去重一次
-        with storage._conn() as conn:  # noqa: SLF001
-            cur = conn.execute(
-                "DELETE FROM jobs WHERE id NOT IN (SELECT MIN(id) FROM jobs GROUP BY company, title, location)"
-            )
-        if cur.rowcount:
-            print(f"🧹 最终去重：删除 {cur.rowcount} 条重复。最终：{storage.stats()}")
+        stats = storage.stats()
+        print(
+            f"\n✅ 本次处理 {total_jobs} 个岗位。数据库现状："
+            f"{stats['total']} 条 / {stats['companies']} 家公司"
+        )
+        print(f"   在招状态分布：{stats['by_recruit_status']}")
+        print("   （唯一索引已在库层防止重复，无需再手工去重）")
     else:
         print(f"\n（dry-run）共 {total_jobs} 个岗位，未写库")
 

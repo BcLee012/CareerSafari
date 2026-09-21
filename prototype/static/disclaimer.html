@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>数据来源与免责声明 · CareerSafari</title>
+  <meta name="description" content="CareerSafari 的服务范围说明、数据来源可信度分级、准确性与时效性免责声明，以及侵权处理方式。" />
+  <meta name="robots" content="index,follow" />
+  <style>
+    :root {
+      --bg: #0f1115; --panel: #1a1d23; --panel-2: #23262d; --border: #2e323a;
+      --text: #e6e8eb; --text-dim: #9ba1ab; --accent: #3a86ff;
+      --warn: #f59e0b; --danger: #ef4444; --success: #2dd4bf;
+      --radius: 10px;
+      --font: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: var(--font); font-size: 14px; line-height: 1.7; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    header { padding: 20px 28px; border-bottom: 1px solid var(--border); }
+    header h1 { margin: 0; font-size: 18px; }
+    header p { margin: 4px 0 0; color: var(--text-dim); font-size: 12px; }
+    main { max-width: 780px; margin: 0 auto; padding: 28px; }
+    h2 { font-size: 16px; margin: 32px 0 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+    h2:first-of-type { margin-top: 0; }
+    p, li { color: #c9ced6; }
+    ul { padding-left: 20px; }
+    li { margin-bottom: 6px; }
+    .card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin: 14px 0; }
+    .callout { background: rgba(245, 158, 11, 0.08); border-left: 3px solid var(--warn); border-radius: 4px; padding: 12px 16px; margin: 14px 0; }
+    .callout strong { color: var(--warn); }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 13px; }
+    th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    th { color: var(--text-dim); font-weight: 500; font-size: 12px; }
+    .tier { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; border: 1px solid currentColor; white-space: nowrap; }
+    .P1 { color: #22c55e; background: rgba(34,197,94,0.12); }
+    .P2 { color: var(--accent); background: rgba(58,134,255,0.12); }
+    .P3 { color: var(--warn); background: rgba(245,158,11,0.12); }
+    .P4 { color: #fb923c; background: rgba(251,146,60,0.12); }
+    code { background: var(--panel-2); padding: 1px 6px; border-radius: 4px; font-family: var(--mono); font-size: 12px; }
+    footer { border-top: 1px solid var(--border); padding: 20px 28px; color: var(--text-dim); font-size: 12px; text-align: center; }
+    @media (max-width: 720px) {
+      header { padding: 16px; }
+      main { padding: 18px 16px; }
+      footer { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>数据来源与免责声明</h1>
+    <p>CareerSafari · 职为你而来 —&nbsp;<a href="/">返回岗位列表</a></p>
+  </header>
+
+  <main>
+    <h2>一、本站是什么</h2>
+    <p>
+      CareerSafari 是一个<strong>求职信息整理与结构化归档的技术演示项目</strong>。
+      它把公开可见的招聘信息（企业招聘官网、官方公众号、招聘平台、第三方转载等）
+      采集下来，整理成带<strong>来源可信度标注</strong>的结构化岗位档案，方便求职者对比与查阅。
+    </p>
+    <div class="callout">
+      <strong>本站不提供招聘服务。</strong>
+      不发布招聘岗位、不接收简历、不提供投递或撮合功能、不开展职业中介活动，也不向求职者收取任何费用。
+      本站仅对<em>已公开的招聘信息</em>做整理与展示，性质上等同于个人笔记与文献索引。
+    </div>
+
+    <h2>二、数据来源可信度分级</h2>
+    <p>每条岗位记录都标注了来源等级，供你判断信息可信度：</p>
+    <table>
+      <thead>
+        <tr><th style="width:70px;">等级</th><th>含义</th><th>说明</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="tier P1">P1</span></td>
+          <td>企业官方</td>
+          <td>企业招聘官网、官方公众号。可信度最高，但官方通常不披露薪资。</td>
+        </tr>
+        <tr>
+          <td><span class="tier P2">P2</span></td>
+          <td>招聘平台</td>
+          <td>BOSS 直聘、猎聘、智联等平台的公开页面。</td>
+        </tr>
+        <tr>
+          <td><span class="tier P3">P3</span></td>
+          <td>转发 / 聚合</td>
+          <td>高校就业网、第三方聚合站的转载。信息往往最全（含薪资区间），但是二手来源，<strong>需交叉核对</strong>。</td>
+        </tr>
+        <tr>
+          <td><span class="tier P4">P4</span></td>
+          <td>UGC</td>
+          <td>小红书、知乎、面经等用户内容。参考性最强、可信度最低。</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>每条记录同时展示<strong>采集日期</strong>与<strong>原始链接</strong>，你可以据此回溯核实。</p>
+
+    <h2>三、准确性、时效性与完整性免责</h2>
+    <ul>
+      <li><strong>可能已过期。</strong>招聘状态随时变化，标注为「在招」不代表仍在招，请以用人单位官方渠道为准。</li>
+      <li><strong>截止日期可能滞后。</strong>截止日期按「单岗位披露 &gt; 页面级公告 &gt; 按岗位类型推算」的优先级回填，存在推算成分，仅供参考。</li>
+      <li><strong>薪资数据尤其不可靠。</strong>官方页普遍不披露薪资，站内出现的薪资多为第三方转载区间，仅供量级参考。</li>
+      <li><strong>抽取可能有误。</strong>字段由自动化流程配合人工校准生成，可能存在遗漏或偏差。以原始链接的原文为准。</li>
+      <li><strong>不构成任何建议。</strong>本站不构成求职建议、法律意见或投资建议。因使用本站信息产生的任何后果，本站不承担责任。</li>
+    </ul>
+
+    <h2>四、权利与侵权处理</h2>
+    <p>
+      站内岗位信息的<strong>著作权归原发布方所有</strong>。本站对相关信息的使用限于「为说明问题而引用」与信息索引，
+      并始终保留原始链接与来源标注。若你是权利人或用人单位，认为某条内容的使用方式不当，或希望删除某条记录，
+      请通过下方方式联系，我们会在核实后<strong>及时删除</strong>。
+    </p>
+    <div class="card">
+      <p style="margin:0;">
+        联系方式：<code>请在此填入你的联系邮箱</code>
+      </p>
+      <p style="margin:6px 0 0; color:var(--text-dim); font-size:12px;">
+        提示：这是模板占位，正式上线前务必替换为真实可用的联系方式——缺失联系方式会削弱免责声明的效力。
+      </p>
+    </div>
+
+    <h2>五、隐私说明</h2>
+    <ul>
+      <li>本站<strong>没有账号体系</strong>，不收集姓名、手机号、简历等任何个人身份信息。</li>
+      <li>浏览器本地存储（localStorage）仅用于保存一个「管理令牌」，<strong>不会上传</strong>，清除浏览器数据即删除。</li>
+      <li>服务端日志会记录访问 IP 与请求路径，用于安全防护与限流，不用于任何其他用途。</li>
+    </ul>
+
+    <h2>六、技术说明</h2>
+    <p>
+      本项目为开源技术演示：后端 FastAPI + SQLite，前端零依赖单页应用，
+      采集产物以 JSON 落盘作为唯一数据源头。查看源码与技术文档请访问仓库：
+      <a href="https://github.com/BruceLi012/CareerSafari" target="_blank" rel="noopener noreferrer">github.com/BruceLi012/CareerSafari</a>。
+    </p>
+  </main>
+
+  <footer>
+    CareerSafari · 职为你而来 — 求职信息整理，仅供参考
+  </footer>
+</body>
+</html>
